@@ -118,3 +118,4 @@ the browser uses Next.js `/api/*` proxy routes.
 4. Every API request sends `Authorization: Bearer <access_token>`
 5. Auto-refresh when access token expires
 6. All conversations, messages, and uploaded documents are scoped to the user
+# RAG-Agent
