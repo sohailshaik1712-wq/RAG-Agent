@@ -1,0 +1,32 @@
+[
+  {
+    "id": "remote-days",
+    "question": "How many days can I work from home?",
+    "expected_sources": ["handbook.md"],
+    "should_abstain": false
+  },
+  {
+    "id": "carry-over",
+    "question": "How many vacation days can I carry over to next year?",
+    "expected_sources": ["handbook.md"],
+    "should_abstain": false
+  },
+  {
+    "id": "reimbursement-limit",
+    "question": "What is the dollar limit for not needing a receipt?",
+    "expected_sources": ["handbook.md"],
+    "should_abstain": false
+  },
+  {
+    "id": "office-stipend",
+    "question": "How much is the ergonomic stipend?",
+    "expected_sources": ["handbook.md"],
+    "should_abstain": false
+  },
+  {
+    "id": "unrelated-question",
+    "question": "What is the company's policy on pet insurance?",
+    "expected_sources": [],
+    "should_abstain": true
+  }
+]

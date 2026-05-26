@@ -1,0 +1,14 @@
+[
+  {
+    "id": "refund-window",
+    "question": "How long do I have to request a refund?",
+    "expected_sources": ["policy.pdf"],
+    "should_abstain": false
+  },
+  {
+    "id": "unsupported-shipping",
+    "question": "Do you ship internationally?",
+    "expected_sources": [],
+    "should_abstain": true
+  }
+]

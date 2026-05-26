@@ -1,0 +1,14 @@
+[
+  {
+    "id": "refund-window",
+    "retrieved_sources": ["policy.pdf"],
+    "answer": "Refund requests are accepted within 30 days. [E1]",
+    "abstained": false
+  },
+  {
+    "id": "unsupported-shipping",
+    "retrieved_sources": [],
+    "answer": "I could not find sufficient evidence in the uploaded documents to answer that question.",
+    "abstained": true
+  }
+]

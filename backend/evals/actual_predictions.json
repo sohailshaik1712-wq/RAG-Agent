@@ -1,0 +1,42 @@
+[
+  {
+    "id": "remote-days",
+    "retrieved_sources": [
+      "handbook.md"
+    ],
+    "answer": "Employees may work remotely up to 3 days per week [E1].",
+    "abstained": false
+  },
+  {
+    "id": "carry-over",
+    "retrieved_sources": [
+      "handbook.md"
+    ],
+    "answer": "A maximum of 5 unused vacation days can be carried over to the next year [E1].",
+    "abstained": false
+  },
+  {
+    "id": "reimbursement-limit",
+    "retrieved_sources": [
+      "handbook.md"
+    ],
+    "answer": "Receipts are mandatory for any item over $25 [E1]. Therefore, a receipt is not needed for items that are $25 or less.",
+    "abstained": false
+  },
+  {
+    "id": "office-stipend",
+    "retrieved_sources": [
+      "handbook.md"
+    ],
+    "answer": "Acme Corp provides a $500 annual stipend for home office ergonomic equipment [E1].",
+    "abstained": false
+  },
+  {
+    "id": "unrelated-question",
+    "retrieved_sources": [
+      "handbook.md"
+    ],
+    "answer": "I could not find sufficient evidence in the uploaded documents to answer that question. Try rephrasing it or uploading a more relevant source.",
+    "abstained": true
+  }
+]
