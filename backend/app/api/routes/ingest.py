@@ -27,7 +27,7 @@ async def ingest_document(
 ):
     """
     Upload a document into a specific conversation's knowledge base.
-    Each conversation has its own isolated Chroma collection so
+    Each conversation has its own isolated vector collection so
     documents from one chat never bleed into another.
     """
     # Verify conversation belongs to user
@@ -72,7 +72,7 @@ async def ingest_document(
 
         for chunk in chunks:
             chunk.metadata["document_id"] = doc.id
-        collection = get_collection(conv.chroma_collection_name)
+        collection = get_collection(conv.vector_collection_name)
         # Use synchronous add_documents to avoid async engine mismatch issues
         collection.add_documents(chunks)
     except HTTPException:
@@ -107,7 +107,7 @@ async def delete_document(
 ):
     """
     Delete a document record from Postgres and remove its chunks
-    from the conversation's Chroma collection.
+    from the conversation's vector collection.
     """
     from sqlalchemy import delete as sql_delete
 
@@ -133,9 +133,9 @@ async def delete_document(
 
     filename = doc.filename
 
-    # Remove chunks from Chroma that came from this file
+    # Remove chunks from Postgres that came from this file
     try:
-        collection = get_collection(conv.chroma_collection_name)
+        collection = get_collection(conv.vector_collection_name)
         chunk_ids = collection.get(where={"document_id": doc_id}).get("ids", [])
         if chunk_ids:
             collection.delete(ids=chunk_ids)
@@ -143,9 +143,9 @@ async def delete_document(
             # Backwards compatibility for chunks ingested before document IDs
             # were recorded in vector metadata.
             collection.delete(where={"source": filename})
-        logger.info("chroma_chunks_deleted", filename=filename, conv_id=conv_id)
+        logger.info("vector_chunks_deleted", filename=filename, conv_id=conv_id)
     except Exception as e:
-        logger.warning("chroma_delete_failed", filename=filename, error=str(e))
+        logger.warning("vector_delete_failed", filename=filename, error=str(e))
 
     # Delete from Postgres
     await db.execute(sql_delete(Document).where(Document.id == doc_id))

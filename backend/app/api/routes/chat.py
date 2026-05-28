@@ -181,7 +181,7 @@ async def chat(
 
     return StreamingResponse(
         _stream(
-            conv.id, body.message, conv.chroma_collection_name, history, document_names
+            conv.id, body.message, conv.vector_collection_name, history, document_names
         ),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
