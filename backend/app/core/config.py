@@ -26,9 +26,6 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = Field(default=15)
     refresh_token_expire_days: int = Field(default=7)
 
-    # Vector store
-    chroma_persist_dir: str = Field(default="./chroma_db")
-
     # Retrieval
     retrieval_top_k: int = Field(default=5, ge=1)
     retrieval_candidate_k: int = Field(default=12, ge=1)

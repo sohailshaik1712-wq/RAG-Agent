@@ -2,10 +2,9 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from langchain_core.documents import Document
-
 from app.graph.edges.conditions import route_after_grader
-from app.graph.nodes.hallucination_checker import hallucination_checker_node
+from app.graph.nodes.judge import judge_node
+from langchain_core.documents import Document
 
 
 class RetrievalRoutingTests(unittest.TestCase):
@@ -35,33 +34,42 @@ class RetrievalRoutingTests(unittest.TestCase):
 
 
 class GroundingGuardTests(unittest.IsolatedAsyncioTestCase):
-    @patch("app.graph.nodes.hallucination_checker.get_settings")
-    async def test_missing_citations_rejects_answer_before_budget_exhaustion(self, settings):
+    @patch("app.graph.nodes.judge.get_settings")
+    async def test_missing_citations_rejects_answer_before_budget_exhaustion(
+        self, settings
+    ):
         settings.return_value = SimpleNamespace(max_retries=3)
         state = {
             "generation": "The refund window is 30 days.",
-            "relevant_docs": [Document(page_content="30 days", metadata={"evidence_id": "E1"})],
+            "relevant_docs": [
+                Document(page_content="30 days", metadata={"evidence_id": "E1"})
+            ],
             "retry_count": 0,
         }
 
-        result = await hallucination_checker_node(state)
+        result = await judge_node(state)
 
         self.assertFalse(result["hallucination_passed"])
         self.assertEqual(result["retry_count"], 1)
 
-    @patch("app.graph.nodes.hallucination_checker.get_settings")
+    @patch("app.graph.nodes.judge.get_settings")
     async def test_missing_citations_abstains_when_budget_is_exhausted(self, settings):
         settings.return_value = SimpleNamespace(max_retries=3)
+        # Budget of 3 means retry_count 2 -> 3 hits limit
         state = {
             "generation": "The refund window is 30 days.",
-            "relevant_docs": [Document(page_content="30 days", metadata={"evidence_id": "E1"})],
+            "relevant_docs": [
+                Document(page_content="30 days", metadata={"evidence_id": "E1"})
+            ],
             "retry_count": 2,
         }
 
-        result = await hallucination_checker_node(state)
+        result = await judge_node(state)
 
         self.assertTrue(result["hallucination_passed"])
-        self.assertIn("sufficiently supported", result["generation"])
+        self.assertIn(
+            "having trouble generating a high-quality answer", result["generation"]
+        )
 
 
 if __name__ == "__main__":

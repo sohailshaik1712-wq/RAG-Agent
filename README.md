@@ -12,7 +12,7 @@ complete persistence across logouts and refreshes.
 |------------|------|
 | Backend    | FastAPI · LangGraph · Gemini Flash 2.5 |
 | Database   | PostgreSQL (users, conversations, messages) |
-| Vector DB  | ChromaDB (per-conversation collections) |
+| Vector DB  | PGVector / Postgres (per-conversation collections) |
 | Auth       | JWT (access + refresh tokens) |
 | Frontend   | Next.js 15 · TypeScript · Tailwind CSS |
 | State      | Zustand (persisted to localStorage) |
